@@ -1,0 +1,25 @@
+.footer {
+  background-color: white;
+  padding: 20px 60px;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+
+  .footerLinks {
+    display: flex;
+    gap: 45px;
+    list-style: none;
+
+    li {
+      font-size: 15px;
+      color: black;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+  }
+}
