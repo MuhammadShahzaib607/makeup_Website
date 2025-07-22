@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
       <img src="/img/lipstick.avif" alt="" />
       <h2>{product.name}</h2>
       <p>{product.description}</p>
-      <button>Add to Cart</button>
+      <p>Rs.3999/-</p>
     </div>
   );
 };
