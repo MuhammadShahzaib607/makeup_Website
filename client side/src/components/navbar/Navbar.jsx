@@ -57,7 +57,7 @@ const Navbar = () => {
     display: "flex",
     gap: "25px"
   }}>
-      <img src='/img/cartImg.png' height='26px' alt='' className='cart' />
+      <img src='/img/cartImg.png' height='37px' alt='' className='cart' />
     <div className='profile' onClick={() => setIsOpen(!isOpen)}>
       <img
         src='/img/avatar.png'
@@ -106,19 +106,19 @@ const Navbar = () => {
           </Link>
         )}
 
+      <Link to='/profile' onClick={() => handleOptionClick('/profile')}>
+          <li>profile</li>
+        </Link>
+
         {currentUser.isAdmin ? (
           <Link to='/notifications' onClick={() => handleOptionClick('/notifications')}>
             <li>notifications</li>
           </Link>
         ) : (
-          <Link to='/history' onClick={() => handleOptionClick('/history')}>
-            <li>History</li>
+          <Link to='/editProfile' onClick={() => handleOptionClick('/history')}>
+            <li>Edit Profile</li>
           </Link>
         )}
-
-        <Link to='/profile' onClick={() => handleOptionClick('/profile')}>
-          <li>profile</li>
-        </Link>
 
         <li onClick={() => setIsOpen(false)}>logout</li>
       </div>

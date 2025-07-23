@@ -22,7 +22,7 @@ const Profile = () => {
     </div>
 
     <div className="totalOrders">
-<div>Orders</div>
+<div>Total Orders</div>
 <span>22</span>
     </div>
 

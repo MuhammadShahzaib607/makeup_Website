@@ -10,7 +10,6 @@ import Peoples from './pages/peoples/Peoples';
 import Orders from './pages/orders/Orders';
 import Notifications from './pages/notifications/Notifications';
 import Profile from './pages/profile/Profile';
-import History from './pages/history/History';
 import Login from './components/login/Login';
 import Signup from './components/signup/Signup';
 import AddProduct from './pages/addProduct/AddProduct';
@@ -29,7 +28,6 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/history" element={<History />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/addProduct" element={<AddProduct />} />
