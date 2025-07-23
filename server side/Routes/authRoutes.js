@@ -1,11 +1,14 @@
 import express from 'express';
-import { getUser, getUsers, login, logout, register } from '../Controllers/authController.js';
+import { getUser, getUsers, login, logout, register, updateUser } from '../Controllers/authController.js';
+import { verifyToken } from '../utils/verifyToken.js';
 
 export let authRoutes = express.Router();
 
 authRoutes.post('/register', register);
 
 authRoutes.post('/login', login);
+
+authRoutes.put("/update", verifyToken, updateUser); 
 
 authRoutes.get('/logout', logout);
 

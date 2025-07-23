@@ -1,17 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './navbar.scss'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [userData, setUserData] = useState({})
   const { pathname } = useLocation()
+const navigate = useNavigate()
 
   const token = localStorage.getItem("token")
-
-  const currentUser = {
-    userName: 'shahzaib',
-    isAdmin: false,
-  }
 
   const handleOptionClick = (to) => {
     if (pathname !== to) {
@@ -19,11 +17,27 @@ const Navbar = () => {
     }
   }
 
+  const fetchUser = async ()=> {
+    try {
+      const userData = await axios.get(`http://localhost:3000/api/v1/auth/getUser/${localStorage.getItem("userId")}`)
+      setUserData(userData.data.data)
+      // console.log(userData.data.data.isAdmin)
+    } catch (error) {
+      
+    }
+  }
+
+  useEffect(()=> {
+fetchUser()
+  }, [])
+
   return (
-    <div className='navbar'>
+    <div className='navbar' style={{
+      display: token ? "flex" : "none" ,
+    }}>
       <div className='webName'>
         <Link to='/'>
-          <h1 onClick={() => setIsOpen(false)}>Cosmetics</h1>
+          <h1 onClick={() => setIsOpen(false)}>AS Cosmo</h1>
         </Link>
       </div>
 
@@ -36,7 +50,7 @@ const Navbar = () => {
   <li className={pathname === '/about' ? 'navLinkActive' : ''}>about</li>
 </Link>
 
-{currentUser.isAdmin ? (
+{userData?.isAdmin ? (
   <Link to='/products' onClick={() => setIsOpen(false)}>
     <li className={pathname === '/products' ? 'navLinkActive' : ''}>products</li>
   </Link>
@@ -60,7 +74,7 @@ const Navbar = () => {
       <img src='/img/cartImg.png' height='37px' alt='' className='cart' />
     <div className='profile' onClick={() => setIsOpen(!isOpen)}>
       <img
-        src='/img/avatar.png'
+        src= {userData?.profilePic || "/img/avatar.png" }
         width='30px'
         height='30px'
         style={{
@@ -69,7 +83,7 @@ const Navbar = () => {
         }}
         alt=''
       />
-      <span>Muhammad</span>
+      <span>{userData?.username}</span>
     </div>
   </div>
 : 
@@ -87,16 +101,17 @@ const Navbar = () => {
         backgroundColor: "white",
         borderRadius: "30px",
         padding: "7px 18px"
-    }}>Get Started</div>
+    }} onClick={()=> {navigate("/signup")}}>Get Started</div>
     <div style={{
         color: "white",
-        fontSize: "15px"
-    }}>Login</div>
+        fontSize: "15px",
+        cursor: "pointer"
+    }} onClick={()=> {navigate("/login")}}>Login</div>
 </div>
 }
 
       <div className={`options ${isOpen ? 'active' : ''}`}>
-        {currentUser.isAdmin ? (
+        {userData?.isAdmin ? (
           <Link to='/addProduct' onClick={() => handleOptionClick('/addProduct')}>
             <li>add product</li>
           </Link>
@@ -110,7 +125,7 @@ const Navbar = () => {
           <li>profile</li>
         </Link>
 
-        {currentUser.isAdmin ? (
+        {userData?.isAdmin ? (
           <Link to='/notifications' onClick={() => handleOptionClick('/notifications')}>
             <li>notifications</li>
           </Link>
@@ -120,7 +135,12 @@ const Navbar = () => {
           </Link>
         )}
 
-        <li onClick={() => setIsOpen(false)}>logout</li>
+        <li onClick={() => {
+          setIsOpen(false)
+localStorage.removeItem("token")
+localStorage.removeItem("userId")
+navigate("/login")
+        }}>logout</li>
       </div>
     </div>
   )

@@ -33,9 +33,13 @@ export const register = async (req, res, next) => {
         next(error)
     }
 }
+
 export const login = async (req, res, next) => {
     try {
-        let user = await Users.findOne({ username: req.body.username, email: req.body.email })
+
+        console.log (req.body.email , "email")
+
+        let user = await Users.findOne({ email: req.body.email })
         if (!user) return next(createError(401, "User not found"))
 
         let isPasswordCorrect = bcrypt.compareSync(req.body.password, user.password)
@@ -49,15 +53,48 @@ export const login = async (req, res, next) => {
             }, process.env.JWT || "cosmetics", { expiresIn: "3d" }
         )
         let { password, ...otherDetails } = user._doc
-        let successRes = createSuccess(200, "User has been logged in successfully")
-        res.
-            cookie("access_token", token, {
-                httpOnly: true
-            }).status(200).json({ successRes, data: otherDetails })
+res.status(200).json({
+    status: true,
+    message: "user logged in successfully",
+    token: token,
+    userData: user
+})
+        
     } catch (error) {
         next(error)
     }
 }
+
+export const updateUser = async (req, res, next) => {
+    try {
+        const userId = req.user.id; // assuming `req.user` is already set via auth middleware
+
+        // Remove empty strings or undefined fields
+        const updateData = {};
+        const fields = ["firstName", "lastName", "mobileNumber", "location", "profilePicture", "gender", "desc"];
+
+        fields.forEach(field => {
+            if (req.body[field] !== undefined && req.body[field] !== "") {
+                updateData[field] = req.body[field];
+            }
+        });
+
+        const updatedUser = await Users.findByIdAndUpdate(
+            userId,
+            { $set: updateData },
+            { new: true }
+        );
+
+        if (!updatedUser) return next(createError(404, "User not found"));
+
+        const { password, ...otherDetails } = updatedUser._doc;
+
+        const successRes = createSuccess(200, "User updated successfully");
+        res.status(200).json({ successRes, data: otherDetails });
+    } catch (error) {
+        next(error);
+    }
+};
 
 export const logout = async (req, res, next) => {
     try {

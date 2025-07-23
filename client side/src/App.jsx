@@ -1,5 +1,6 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { ToastContainer, Bounce } from 'react-toastify'
 import Navbar from './components/navbar/Navbar';
 import Footer from './components/footer/Footer';
 import Home from './pages/home/Home';
@@ -14,12 +15,37 @@ import Login from './components/login/Login';
 import Signup from './components/signup/Signup';
 import AddProduct from './pages/addProduct/AddProduct';
 import EditProfile from './pages/editProfile/EditProfile';
+import PrivateRoute from './routes/PrivateRoute';
+import AuthRoute from './routes/AuthRoute';
+import NotFoundPage from './pages/notFoundPage/NotFoundPage';
 
 function App() {
+
+const location = useLocation()
+  const hideLayoutRoutes = ['/login', '/signup', '/notfound'];
+  const hideLayout = hideLayoutRoutes.includes(location.pathname);
+
   return (
     <>
-      <Navbar />
+
+<ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick={false}
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+transition={Bounce}
+/>
+
+    {!hideLayout && <Navbar />}
       <Routes>
+
+<Route element={<PrivateRoute />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
@@ -28,12 +54,19 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/addProduct" element={<AddProduct />} />
         <Route path="/editProfile" element={<EditProfile />} />
+</Route>
+
+<Route element={<AuthRoute />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+</Route>
+
+<Route path="*" element={<NotFoundPage />} />
+
       </Routes>
-      <Footer />
+   {!hideLayout && <Footer />}
     </>
   );
 }

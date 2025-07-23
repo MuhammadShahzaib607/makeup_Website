@@ -2,8 +2,11 @@ import React from 'react'
 import "./footer.scss"
 
 const Footer = () => {
+  const token = localStorage.getItem("token")
   return (
-<footer className="footer">
+<footer className="footer" style={{
+      display: token ? "flex" : "none" ,
+    }}>
   <ul className="footerLinks">
     <li>Home</li>
     <li>About</li>

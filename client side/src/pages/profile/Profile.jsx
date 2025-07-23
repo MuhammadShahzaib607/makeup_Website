@@ -1,24 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import "./profile.scss"
-import ProfileOrdersCard from '../../components/profileOrdersCard/ProfileOrdersCard'
+import axios from 'axios'
 
 const Profile = () => {
+
+    const [userData, setUserData] = useState({})
+
+ const fetchUser = async ()=> {
+    try {
+      const userData = await axios.get(`http://localhost:3000/api/v1/auth/getUser/${localStorage.getItem("userId")}`)
+      setUserData(userData.data.data)
+    //   console.log(userData.data.data)
+    } catch (error) {
+      
+    }
+  }
+
+  useEffect(()=> {
+fetchUser()
+  }, [])
+
   return (
     <div className='profileContainer'>
 <div className="left">
     <div className="userName">
         <div>UserName</div>
-        <div>Muhammad Shahzaib</div>
+        <div>{userData?.username}</div>
     </div>
     <div className='email'>
         <div>Email</div>
-        <div>Shahzaib@gmail.com</div>
+        <div>{userData?.email}</div>
     </div>
 
     <div className="desc">
         <div>Description</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque blanditiis voluptatem incidunt saepe totam quas quasi, omnis explicabo sit architecto sapiente! Necessitatibus veniam ipsum numquam nemo? Quibusdam quae alias eum fuga. Fugiat perspiciatis consequatur impedit sint,</div>
+        <div>{userData?.desc || <p>No description provided</p> }</div>
     </div>
 
     <div className="totalOrders">
@@ -38,8 +55,8 @@ const Profile = () => {
 </div>
 
 <div className="right">
-    <h2>Muhammad Shahzaib</h2>
-    <img src="/img/avatar.png" alt="" />
+    <h2>{userData?.username}</h2>
+    <img src={userData.profilePic || "/img/avatar.png"} alt="" />
    <Link to="/editProfile"><div className="editBtn">Edit Profile</div></Link>
 </div>
     </div>
