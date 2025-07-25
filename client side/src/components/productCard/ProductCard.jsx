@@ -4,10 +4,10 @@ import './productCard.scss';
 const ProductCard = ({ product }) => {
   return (
     <div className="productCard">
-      <img src="/img/lipstick.avif" alt="" />
+      <img src={product?.images[0].url} alt="" />
       <h2>{product.name}</h2>
-      <p>{product.description}</p>
-      <p>Rs.3999/-</p>
+      <p style={{textAlign: "center"}}>{product.description}</p>
+      <p>Rs.{product?.price}/-</p>
     </div>
   );
 };

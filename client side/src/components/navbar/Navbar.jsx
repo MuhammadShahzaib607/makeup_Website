@@ -21,7 +21,7 @@ const navigate = useNavigate()
     try {
       const userData = await axios.get(`http://localhost:3000/api/v1/auth/getUser/${localStorage.getItem("userId")}`)
       setUserData(userData.data.data)
-      // console.log(userData.data.data.isAdmin)
+      // console.log(userData.data.data)
     } catch (error) {
       
     }
@@ -52,7 +52,7 @@ fetchUser()
 
 {userData?.isAdmin ? (
   <Link to='/products' onClick={() => setIsOpen(false)}>
-    <li className={pathname === '/products' ? 'navLinkActive' : ''}>products</li>
+    <li className={pathname === '/products' ? 'navLinkActive' : ''}>peoples</li>
   </Link>
 ) : (
   <Link to='/peoples' onClick={() => setIsOpen(false)}>
@@ -73,16 +73,22 @@ fetchUser()
   }}>
       <img src='/img/cartImg.png' height='37px' alt='' className='cart' />
     <div className='profile' onClick={() => setIsOpen(!isOpen)}>
-      <img
-        src= {userData?.profilePic || "/img/avatar.png" }
+      <div className="profilePic" style={{
+        width: "30px",
+        height: "30px",
+        objectFit: "cover",
+        overflow: "hidden"
+      }}>
+        <img
+        src= {userData?.profilePicture || "/img/avatar.png" }
         width='30px'
         height='30px'
         style={{
           borderRadius: '50%',
-          border: '1px solid pink',
         }}
         alt=''
       />
+      </div>
       <span>{userData?.username}</span>
     </div>
   </div>
@@ -101,7 +107,7 @@ fetchUser()
         backgroundColor: "white",
         borderRadius: "30px",
         padding: "7px 18px"
-    }} onClick={()=> {navigate("/signup")}}>Get Started</div>
+    }} onClick={()=> {navigate("/signup")}}>Join Now</div>
     <div style={{
         color: "white",
         fontSize: "15px",

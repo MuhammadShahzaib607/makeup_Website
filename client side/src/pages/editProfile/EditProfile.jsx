@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 const EditProfile = () => {
   const inputRef = useRef();
   const [preview, setPreview] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -27,21 +29,48 @@ const EditProfile = () => {
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
+      setSelectedImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
-        setFormData(prev => ({
-          ...prev,
-          profilePicture: reader.result
-        }));
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = async () => {
+  const uploadImageToCloudinary = async (file) => {
+    setIsLoading(true)
+    const form = new FormData();
+    form.append('file', file);
+    form.append('upload_preset', 'medium_clone');
+    form.append('cloud_name', 'dmdsqhaiz');
+
     try {
-      const { firstName, lastName, desc, mobileNumber, location, gender, profilePicture } = formData;
+      const res = await fetch("https://api.cloudinary.com/v1_1/dmdsqhaiz/image/upload", {
+        method: "POST",
+        body: form
+      });
+      const data = await res.json();
+      console.log("Cloudinary URL:", data.secure_url);
+      setIsLoading(false)
+      return data.secure_url;
+    } catch (err) {
+      console.error("Cloudinary upload error:", err);
+            setIsLoading(false)
+      return null;
+    }
+  };
+
+  const handleSubmit = async (imageUrl) => {
+    try {
+      const {
+        firstName,
+        lastName,
+        desc,
+        mobileNumber,
+        location,
+        gender
+      } = formData;
 
       const body = {};
       if (firstName) body.firstName = firstName;
@@ -50,33 +79,67 @@ const EditProfile = () => {
       if (mobileNumber) body.mobileNumber = mobileNumber;
       if (location) body.location = location;
       if (gender) body.gender = gender;
-      if (profilePicture) body.profilePicture = profilePicture;
-
-console.log(body, "===>> body")
+      if (imageUrl) body.profilePicture = imageUrl;
 
       const res = await axios.put('http://localhost:3000/api/v1/auth/update', body, {
         withCredentials: true,
-         headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}` 
-      }
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
       });
 
-      toast.success(res?.data?.successRes?.message || "Updated successfully");
+      // toast.success(res?.data?.successRes?.message || "Updated successfully");
 
+      // Clear form
       setFormData({
-  firstName: '',
-  lastName: '',
-  desc: '',
-  mobileNumber: '',
-  location: '',
-  gender: '',
-  profilePicture: ''
-});
+        firstName: '',
+        lastName: '',
+        desc: '',
+        mobileNumber: '',
+        location: '',
+        gender: '',
+        profilePicture: ''
+      });
+      setPreview(null);
+      setSelectedImage(null);
+      
+window.location.reload()
 
     } catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error(err?.response?.data?.message || "Something went wrong");
     }
+  };
+
+  const handleUploadAndSubmit = async () => {
+
+      const { firstName, lastName, desc, mobileNumber, location, gender } = formData;
+
+  const isAllFieldsEmpty =
+    !firstName.trim() &&
+    !lastName.trim() &&
+    !desc.trim() &&
+    !mobileNumber.trim() &&
+    !location.trim() &&
+    !gender.trim() &&
+    !selectedImage;
+
+  if (isAllFieldsEmpty) {
+    toast.error("Enter something");
+    return;
+  }
+
+    let imageUrl = formData.profilePicture;
+
+    if (selectedImage) {
+      imageUrl = await uploadImageToCloudinary(selectedImage);
+      if (!imageUrl) {
+        toast.error("Image upload failed");
+        return;
+      }
+    }
+
+    await handleSubmit(imageUrl);
   };
 
   return (
@@ -85,12 +148,12 @@ console.log(body, "===>> body")
 
       <div className="form-group">
         <label>First Name</label>
-        <input type="text" value={formData.firstName} name="firstName" placeholder="First Name" onChange={handleChange} />
+        <input type="text" name="firstName" value={formData.firstName} placeholder="First Name" onChange={handleChange} />
       </div>
 
       <div className="form-group">
         <label>Last Name</label>
-        <input type="text" value={formData.lastName} name="lastName" placeholder="Last Name" onChange={handleChange} />
+        <input type="text" name="lastName" value={formData.lastName} placeholder="Last Name" onChange={handleChange} />
       </div>
 
       <div className="form-group">
@@ -100,18 +163,18 @@ console.log(body, "===>> body")
 
       <div className="form-group">
         <label>Phone Number</label>
-        <input type="tel" value={formData.mobileNumber} name="mobileNumber" placeholder="03xx-xxxxxxx" onChange={handleChange} />
+        <input type="tel" name="mobileNumber" value={formData.mobileNumber} placeholder="03xx-xxxxxxx" onChange={handleChange} />
       </div>
 
       <div className="form-group">
         <label>City</label>
-        <input type="text" value={formData.location} name="location" placeholder="Karachi, Lahore, etc." onChange={handleChange} />
+        <input type="text" name="location" value={formData.location} placeholder="Karachi, Lahore, etc." onChange={handleChange} />
       </div>
 
       <div className="form-group">
         <label>Gender</label>
         <select name="gender" value={formData.gender} onChange={handleChange}>
-          <option value="" disabled >Select</option>
+          <option value="" disabled>Select</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
@@ -125,12 +188,16 @@ console.log(body, "===>> body")
         accept="image/*"
       />
 
-      <div className="btns" style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+      <div className="btns" style={{ display: "flex", alignItems: "center", flexDirection: "column"}}>
         <div className="uploadPicBtn">
-          <button onClick={() => inputRef.current.click()}>Upload Picture</button>
+          <button onClick={() => inputRef.current.click()} style={{backgroundColor: "#78003c"}}>Upload Picture</button>
         </div>
         <div className="saveBtn">
-          <button onClick={handleSubmit}>Save</button>
+          {
+            isLoading ?
+            <button>Updating profile...</button> :
+            <button onClick={handleUploadAndSubmit}>Update Profile</button>
+          }
         </div>
       </div>
     </div>

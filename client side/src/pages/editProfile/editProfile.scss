@@ -68,11 +68,13 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    width: 100%;
 
     button {
       background-color: #D63384;
+      width: 100%;
       color: #fff;
-      padding: 10px 24px;
+      padding: 14px 24px;
       font-size: 15px;
       font-weight: 600;
       border: none;

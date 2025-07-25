@@ -9,8 +9,9 @@ export const register = async (req, res, next) => {
         let hash = bcrypt.hashSync(req.body.password, salt)
         const date = new Date();
         const formattedDate = date.toLocaleString("en-US", {
+            day: "2-digit",
             month: "short",
-            day: "numeric",
+            year: "numeric"
         });
         let newUser = new Users({
             username: req.body.username,
@@ -37,7 +38,7 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
     try {
 
-        console.log (req.body.email , "email")
+        console.log(req.body.email, "email")
 
         let user = await Users.findOne({ email: req.body.email })
         if (!user) return next(createError(401, "User not found"))
@@ -53,13 +54,13 @@ export const login = async (req, res, next) => {
             }, process.env.JWT || "cosmetics", { expiresIn: "3d" }
         )
         let { password, ...otherDetails } = user._doc
-res.status(200).json({
-    status: true,
-    message: "user logged in successfully",
-    token: token,
-    userData: user
-})
-        
+        res.status(200).json({
+            status: true,
+            message: "user logged in successfully",
+            token: token,
+            userData: user
+        })
+
     } catch (error) {
         next(error)
     }
@@ -72,6 +73,8 @@ export const updateUser = async (req, res, next) => {
         // Remove empty strings or undefined fields
         const updateData = {};
         const fields = ["firstName", "lastName", "mobileNumber", "location", "profilePicture", "gender", "desc"];
+
+        console.log(req.body.profilePicture, "===>>> profile Pic")
 
         fields.forEach(field => {
             if (req.body[field] !== undefined && req.body[field] !== "") {

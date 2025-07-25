@@ -19,7 +19,6 @@ export const uploadToCloudinary = async (filePath, folderName = 'uploads') => {
         fs.unlink(filePath, (err) => {
             if (err) console.error("Error deleting temp file:", err);
         })
-        console.log(result, "result");
         return result;
     } catch (error) {
         throw new Error("Cloudinary Upload Failed: " + error.message);

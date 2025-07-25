@@ -140,5 +140,166 @@ width: 130px;
   margin: 40px 0;
 }
 
+.promoBanner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffe6f0;
+  padding: 50px 110px;
+  border-radius: 20px;
+  margin-top: 60px;
+  flex-wrap: wrap;
+
+  .promoText {
+    flex: 1;
+    h2 {
+      font-size: 30px;
+      color: #D63384;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 25px;
+      max-width: 500px;
+      line-height: 23px;
+    }
+
+    button {
+      background-color: #D63384;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 10px 30px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: #e84b97;
+      }
+    }
+  }
+
+  .promoImage {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    img {
+      max-width: 300px;
+      border-radius: 12px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 30px 20px;
+    flex-direction: column;
+    text-align: center;
+
+    .promoImage {
+      margin-top: 30px;
+    }
+  }
+}
+
+.testimonials {
+  padding: 60px 110px;
+  background-color: #fff0f6;
+
+  h2 {
+    font-size: 28px;
+    text-align: center;
+    color: #D63384;
+    margin-bottom: 40px;
+  }
+
+  .testimonialCards {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .card {
+      background: white;
+      border: 1px solid #f4c2d7;
+      border-radius: 16px;
+      padding: 25px;
+      max-width: 300px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      transition: 0.3s;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      p {
+        font-size: 16px;
+        color: #444;
+        margin-bottom: 15px;
+        line-height: 20px;
+      }
+
+      h4 {
+        font-size: 14px;
+        color: #D63384;
+      }
+    }
+  }
+}
+
+.whyChooseUs {
+  padding: 60px 110px;
+  background-color: #fff5fa;
+  text-align: center;
+
+  h2 {
+    font-size: 28px;
+    color: #D63384;
+    margin-bottom: 40px;
+  }
+
+  .reasons {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+
+    .reasonCard {
+      flex: 1;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      max-width: 320px;
+
+      img {
+        width: 50px;
+        margin-bottom: 20px;
+      }
+
+      h4 {
+        font-size: 20px;
+        color: #D63384;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 15px;
+        color: #555;
+        line-height: 1.5;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .reasons {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}
 
 }

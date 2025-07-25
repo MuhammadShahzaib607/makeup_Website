@@ -18,6 +18,7 @@ import EditProfile from './pages/editProfile/EditProfile';
 import PrivateRoute from './routes/PrivateRoute';
 import AuthRoute from './routes/AuthRoute';
 import NotFoundPage from './pages/notFoundPage/NotFoundPage';
+import ScrollToTop from './components/scrollToTop/ScrollToTop';
 
 function App() {
 
@@ -43,13 +44,13 @@ transition={Bounce}
 />
 
     {!hideLayout && <Navbar />}
+    <ScrollToTop />
       <Routes>
-
 <Route element={<PrivateRoute />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<Products />} />
         <Route path="/peoples" element={<Peoples />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/notifications" element={<Notifications />} />

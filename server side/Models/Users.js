@@ -47,6 +47,9 @@ let UserSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    date: {
+        type: String,
+    }
 }, { timestamps: true })
 
 export default mongoose.model("User", UserSchema)

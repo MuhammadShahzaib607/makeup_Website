@@ -10,7 +10,7 @@ productsRoutes.post('/createProduct', verifyUser, verifyToken, upload.array("ima
 
 productsRoutes.put('/updateProduct/:id', verifyUser, verifyToken, upload.array("images", 5), updateProduct); // Assuming updateProduct uses the same logic as createProduct
 
-productsRoutes.get('/getProducts', verifyToken, getProducts);
+productsRoutes.get('/getProducts/:id', verifyToken, getProducts);
 
 productsRoutes.get('/getProduct/:id', verifyToken, getProduct); // Assuming you want to get products by user ID or similar
 

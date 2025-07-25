@@ -1,17 +1,18 @@
 import React from 'react'
 import "./people.scss"
 
-const People = () => {
+const People = ({user}) => {
+  console.log(user)
   return (
 <div className="people">
   <div className="container">
-    <img src="/img/avatar.png" alt="user" />
-    <div className="userName">Syed Muhammad Suleman</div>
-    <div className="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat dolorum nisi quo sed excepturi.</div>
+    <img src={user?.profilePicture || "/img/avatar.png"} alt="user" />
+    <div className="userName">{user?.username}</div>
+    <div className="desc">{user?.desc || <p style={{textDecoration: "line-through"}}>No Description Provided</p> }</div>
     <div className="stats">
-      <div className="item"><span>13</span> Orders</div>
-      <div className="item">Karachi, Pakistan</div>
-      <div className="item">25 Feb 2025</div>
+      <div className="item">{user?.gender || <p style={{textDecoration: "line-through"}}>Missing</p> }</div>
+      <div className="item">{user?.location || <p style={{textDecoration: "line-through"}}>Missing</p> }</div>
+      <div className="item">{user?.date}</div>
     </div>
   </div>
 </div>

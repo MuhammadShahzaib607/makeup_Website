@@ -24,6 +24,17 @@ fetchUser()
   return (
     <div className='profileContainer'>
 <div className="left">
+
+<div className="firstName">
+  <div>FirstName</div>
+  <div>{userData?.firstName || <p>No firstName provided</p>}</div>
+</div>
+
+<div className="lastName">
+  <div>LastName</div>
+  <div>{userData?.lastName || <p>No firstName provided</p>}</div>
+</div>
+
     <div className="userName">
         <div>UserName</div>
         <div>{userData?.username}</div>
@@ -33,10 +44,28 @@ fetchUser()
         <div>{userData?.email}</div>
     </div>
 
+<div className="phoneNumber">
+  <div>PhoneNumber</div>
+  <div>{userData?.mobileNumber || <p>No Phone Number provided</p>}</div>
+</div>
+
+<div className="gender">
+  <div>Gender</div>
+  <div style={{textTransform: "capitalize"}}>{userData?.gender || <p>No Gender provided</p>}</div>
+</div>
+
+<div className="location">
+  <div>Location</div>
+  <div>{userData?.location || <p>No Location provided</p>}</div>
+</div>
+
+
     <div className="desc">
         <div>Description</div>
         <div>{userData?.desc || <p>No description provided</p> }</div>
     </div>
+
+
 
     <div className="totalOrders">
 <div>Total Orders</div>
@@ -56,7 +85,7 @@ fetchUser()
 
 <div className="right">
     <h2>{userData?.username}</h2>
-    <img src={userData.profilePic || "/img/avatar.png"} alt="" />
+    <img src={userData.profilePicture || "/img/avatar.png"} alt="" />
    <Link to="/editProfile"><div className="editBtn">Edit Profile</div></Link>
 </div>
     </div>

@@ -13,6 +13,8 @@ const Notification = () => {
 <div className='date'>25 Feb 2025</div>
         </div>
 
+        <hr />
+
 <div className="subject">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur, placeat.</div>
 
 <div className="message">
