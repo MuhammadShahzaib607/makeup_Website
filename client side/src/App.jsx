@@ -19,6 +19,7 @@ import PrivateRoute from './routes/PrivateRoute';
 import AuthRoute from './routes/AuthRoute';
 import NotFoundPage from './pages/notFoundPage/NotFoundPage';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
+import Product from './pages/product/Product';
 
 function App() {
 
@@ -51,6 +52,7 @@ transition={Bounce}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/products/:id" element={<Products />} />
+        <Route path="/product/:id" element={<Product />} />
         <Route path="/peoples" element={<Peoples />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/notifications" element={<Notifications />} />

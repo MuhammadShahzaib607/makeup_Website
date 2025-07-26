@@ -14,6 +14,7 @@ const AddProduct = () => {
   const [images, setImages] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [categories, setCategories] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const fetchCategory = async () => {
     const res = await axios.get("http://localhost:3000/api/v1/category/getallCategories")
@@ -49,6 +50,7 @@ const AddProduct = () => {
 images.forEach((img) => form.append('images', img));
 
     try {
+      setIsLoading(true)
       const res = await axios.post('http://localhost:3000/api/v1/products/createProduct', form, {
         withCredentials: true,
         headers: {
@@ -66,8 +68,10 @@ images.forEach((img) => form.append('images', img));
       setStock('');
       setImages([]);
       setPreviewUrls([]);
+      setIsLoading(false)
     } catch (err) {
       toast.error(err?.response?.data?.message || "Error creating product");
+            setIsLoading(false)
     }
   };
 
@@ -153,7 +157,11 @@ images.forEach((img) => form.append('images', img));
 
       <div className="btns">
         <button className="uploadImg" onClick={() => inputRef.current.click()}>Upload Image</button>
-        <button className="add" onClick={handleSubmit}>Add Product</button>
+  {isLoading ? (
+    <button className='add'><div className="spinnerBtn"></div></button>
+  ) : (
+    <button className='add' onClick={handleSubmit}>Add Product</button>
+  )}
       </div>
     </div>
   );

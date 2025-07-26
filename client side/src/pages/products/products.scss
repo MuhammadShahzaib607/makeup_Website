@@ -6,6 +6,10 @@
   padding: 40px 60px;
   background-color: #f8f8f8;
 
+  a {
+    text-decoration: none;
+  }
+
   .loaderContainer {
   display: flex;
   flex-direction: column;

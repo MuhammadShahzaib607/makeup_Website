@@ -11,6 +11,11 @@
   transition: all 0.3s ease;
   cursor: pointer;
 
+  Link, a {
+    text-decoration: none;
+    list-style: none;
+  }
+
   img {
     width: 100%;
     height: 170px;
