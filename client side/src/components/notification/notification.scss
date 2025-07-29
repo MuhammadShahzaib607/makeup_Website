@@ -24,8 +24,8 @@
       gap: 12px;
 
       img {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         object-fit: cover;
       }
@@ -71,6 +71,25 @@ hr {
 
     &:hover {
       background-color: rgb(192, 14, 49);
+    }
+  }
+
+.seen {
+display: none;
+}
+
+  .seenBtn {
+    align-self: flex-end;
+    background-color: rgba(0, 128, 0, 0.863);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+background-color: rgb(8, 114, 8);
     }
   }
 

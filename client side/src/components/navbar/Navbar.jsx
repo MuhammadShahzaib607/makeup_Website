@@ -34,109 +34,6 @@ const Navbar = () => {
       
   return (
  <>
-
-{
-  isToggle && 
-<div className="toggleNavbar">
-  <div className='toggleNavLinks'>
-    <Link to='/' onClick={() => setIsOpen(false)}>
-      <li className={pathname === '/' ? 'navLinkActive' : ''}>home</li>
-    </Link>
-
-    <Link to='/about' onClick={() => setIsOpen(false)}>
-      <li className={pathname === '/about' ? 'navLinkActive' : ''}>about</li>
-    </Link>
-
-    {userData?.isAdmin ? (
-      <Link to='/products' onClick={() => setIsOpen(false)}>
-        <li className={pathname === '/products' ? 'navLinkActive' : ''}>peoples</li>
-      </Link>
-    ) : (
-      <Link to='/peoples' onClick={() => setIsOpen(false)}>
-        <li className={pathname === '/peoples' ? 'navLinkActive' : ''}>peoples</li>
-      </Link>
-    )}
-
-    <Link to='/contact' onClick={() => setIsOpen(false)}>
-      <li className={pathname === '/contact' ? 'navLinkActive' : ''}>contact</li>
-    </Link>
-  </div>
-
-  <div className="toggleNavIcons">
-    <img src='/img/cartImg.png' height='37px' alt='' className='cart' />
-
-    <div className="profileWrapper">
-      <div className='profile' onClick={() => setToggleOptions(!toggleOptions)}>
-        <div className="profilePic" style={{
-          width: "30px",
-          height: "30px",
-          objectFit: "cover",
-          overflow: "hidden"
-        }}>
-          <img
-            src={userData?.profilePicture || "/img/avatar.png"}
-            width='30px'
-            height='30px'
-            style={{ borderRadius: '50%' }}
-            alt=''
-          />
-        </div>
-        <span>{userData?.username}</span>
-      </div>
-
-      <div className={`toggleOptions ${toggleOptions ? 'active' : ''}`}>
-        {userData?.isAdmin ? (
-          <Link to='/addProduct' onClick={() => {handleOptionClick('/addProduct')
-            setIsToggle(false)
-            setToggleOptions(false)
-          }}>
-            <li>add product</li>
-          </Link>
-        ) : (
-          <Link to='/orders' onClick={() => {handleOptionClick('/orders')
-                        setIsToggle(false)
-            setToggleOptions(false)
-          }}>
-            <li>orders</li>
-          </Link>
-        )}
-
-        <Link to='/profile' onClick={() => {handleOptionClick('/profile')
-                      setIsToggle(false)
-            setToggleOptions(false)
-        }}>
-          <li>profile</li>
-        </Link>
-
-        {userData?.isAdmin ? (
-          <Link to='/notifications' onClick={() => {handleOptionClick('/notifications')
-                                  setIsToggle(false)
-            setToggleOptions(false)
-          }}>
-            <li>notifications</li>
-          </Link>
-        ) : (
-          <Link to='/editProfile' onClick={() => {handleOptionClick('/editProfile')
-                                  setIsToggle(false)
-            setToggleOptions(false)
-          }}>
-            <li>Edit Profile</li>
-          </Link>
-        )}
-
-        <li onClick={() => {
-          setIsOpen(false)
-          localStorage.removeItem("token")
-          localStorage.removeItem("userId")
-          navigate("/login")
-        }}>logout</li>
-      </div>
-    </div>
-  </div>
-</div>
-
-}
-
     <div className='navbar' style={{
       display: token ? "flex" : "none" ,
     }}>
@@ -157,8 +54,8 @@ const Navbar = () => {
 </Link>
 
 {userData?.isAdmin ? (
-  <Link to='/products' onClick={() => setIsOpen(false)}>
-    <li className={pathname === '/products' ? 'navLinkActive' : ''}>peoples</li>
+  <Link to='/peoples' onClick={() => setIsOpen(false)}>
+    <li className={pathname === '/peoples' ? 'navLinkActive' : ''}>peoples</li>
   </Link>
 ) : (
   <Link to='/peoples' onClick={() => setIsOpen(false)}>
@@ -262,6 +159,107 @@ const Navbar = () => {
         }}>logout</li>
       </div>
     </div>
+
+    {
+  isToggle && 
+<div className="toggleNavbar">
+  <div className='toggleNavLinks'>
+    <Link to='/' onClick={() => setIsOpen(false)}>
+      <li className={pathname === '/' ? 'navLinkActive' : ''}>home</li>
+    </Link>
+
+    <Link to='/about' onClick={() => setIsOpen(false)}>
+      <li className={pathname === '/about' ? 'navLinkActive' : ''}>about</li>
+    </Link>
+
+    {userData?.isAdmin ? (
+      <Link to='/peoples' onClick={() => setIsOpen(false)}>
+        <li className={pathname === '/peoples' ? 'navLinkActive' : ''}>Peoples</li>
+      </Link>
+    ) : (
+      <Link to='/peoples' onClick={() => setIsOpen(false)}>
+        <li className={pathname === '/peoples' ? 'navLinkActive' : ''}>peoples</li>
+      </Link>
+    )}
+
+    <Link to='/contact' onClick={() => setIsOpen(false)}>
+      <li className={pathname === '/contact' ? 'navLinkActive' : ''}>contact</li>
+    </Link>
+  </div>
+
+  <div className="toggleNavIcons">
+    <img src='/img/cartImg.png' height='37px' alt='' className='cart' />
+
+    <div className="profileWrapper">
+      <div className='profile' onClick={() => setToggleOptions(!toggleOptions)}>
+        <div className="profilePic" style={{
+          width: "30px",
+          height: "30px",
+          objectFit: "cover",
+          overflow: "hidden"
+        }}>
+          <img
+            src={userData?.profilePicture || "/img/avatar.png"}
+            width='30px'
+            height='30px'
+            style={{ borderRadius: '50%' }}
+            alt=''
+          />
+        </div>
+        <span>{userData?.username}</span>
+      </div>
+
+      <div className={`toggleOptions ${toggleOptions ? 'active' : ''}`}>
+        {userData?.isAdmin ? (
+          <Link to='/addProduct' onClick={() => {handleOptionClick('/addProduct')
+            setIsToggle(false)
+            setToggleOptions(false)
+          }}>
+            <li>add product</li>
+          </Link>
+        ) : (
+          <Link to='/orders' onClick={() => {handleOptionClick('/orders')
+                        setIsToggle(false)
+            setToggleOptions(false)
+          }}>
+            <li>orders</li>
+          </Link>
+        )}
+
+        <Link to='/profile' onClick={() => {handleOptionClick('/profile')
+                      setIsToggle(false)
+            setToggleOptions(false)
+        }}>
+          <li>profile</li>
+        </Link>
+
+        {userData?.isAdmin ? (
+          <Link to='/notifications' onClick={() => {handleOptionClick('/notifications')
+                                  setIsToggle(false)
+            setToggleOptions(false)
+          }}>
+            <li>notifications</li>
+          </Link>
+        ) : (
+          <Link to='/editProfile' onClick={() => {handleOptionClick('/editProfile')
+                                  setIsToggle(false)
+            setToggleOptions(false)
+          }}>
+            <li>Edit Profile</li>
+          </Link>
+        )}
+
+        <li onClick={() => {
+          setIsOpen(false)
+          localStorage.removeItem("token")
+          localStorage.removeItem("userId")
+          navigate("/login")
+        }}>logout</li>
+      </div>
+    </div>
+  </div>
+</div>
+}
  </>
   )
 }
