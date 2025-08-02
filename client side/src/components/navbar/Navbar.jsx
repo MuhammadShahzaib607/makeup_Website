@@ -74,7 +74,7 @@ const Navbar = () => {
     display: "flex",
     gap: "25px"
   }}>
-      <img src='/img/cartImg.png' height='37px' alt='' className='cart' />
+      <Link to="/cart"><img src='/img/cartImg.png' height='37px' alt='' className='cart' /></Link>
    
 <div className="profileWrapper">
    <div className='profile' onClick={() => setIsOpen(!isOpen)}>
@@ -188,7 +188,7 @@ const Navbar = () => {
   </div>
 
   <div className="toggleNavIcons">
-    <img src='/img/cartImg.png' height='37px' alt='' className='cart' />
+    <Link to="/cart"><img src='/img/cartImg.png' height='37px' alt='' className='cart' /></Link>
 
     <div className="profileWrapper">
       <div className='profile' onClick={() => setToggleOptions(!toggleOptions)}>

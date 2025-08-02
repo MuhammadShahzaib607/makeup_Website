@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./product.scss";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { CartContext } from "../../../context/CartContext";
+import { toastAlert } from "../../utils/toastAlert";
 
 const Product = () => {
   const [product, setProduct] = useState();
   const { id } = useParams();
   const [productQuantity, setProductQuantity] = useState(0)
   const [err, setErr] = useState(false)
+  const {items, setItems} = useContext(CartContext)
 
   const fetchProduct = async () => {
     try {
@@ -24,6 +27,32 @@ const Product = () => {
       console.error("Error fetching product", error);
     }
   };
+
+  const addToCart = ()=> {
+
+if (productQuantity <= 0) {
+ return toastAlert({
+    type: "error",
+    message: "Select quantity first."
+  })
+}
+
+    const data = {
+  name: product.name,
+  img: product.images[0].url,
+  price: product.price,
+  description: product.description,
+  quantity: productQuantity
+}
+const itemsCopy = [...items]
+itemsCopy.push(data)
+localStorage.setItem("items", JSON.stringify(itemsCopy))
+setItems(itemsCopy)
+toastAlert({
+  type: "success",
+  message: "Item added to cart!"
+})
+  }
 
   useEffect(() => {
     fetchProduct();
@@ -60,7 +89,7 @@ if (productQuantity > 18) {
 {err && <span style={{fontSize: "14px", color: "gray", lineHeight: "19px"}}>You can only add up to 20 items at a time. Please reduce the quantity.</span>}
             </div>
           </div>
-            <button className="addToCart">Add to Cart</button>
+            <button className="addToCart" onClick={addToCart}>Add to Cart</button>
 
           <div className="meta">
             <p>
