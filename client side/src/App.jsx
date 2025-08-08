@@ -20,6 +20,8 @@ import NotFoundPage from './pages/notFoundPage/NotFoundPage';
 import ScrollToTop from './components/scrollToTop/ScrollToTop';
 import Product from './pages/product/Product';
 import Cart from './pages/cart/Cart';
+import Checkout from './pages/checkout/Checkout';
+import Orders from './pages/orders/Orders';
 
 function App() {
   const location = useLocation();
@@ -28,7 +30,7 @@ function App() {
   const privateRouteBases = [
     '/', '/about', '/contact', '/products', '/product',
     '/peoples', '/notifications', '/profile',
-    '/addProduct', '/editProfile', '/cart'
+    '/addProduct', '/editProfile', '/cart', '/checkout', "/orders"
   ];
 
   // Check if current path starts with any private route path
@@ -68,6 +70,8 @@ function App() {
           <Route path="/addProduct" element={<AddProduct />} />
           <Route path="/editProfile" element={<EditProfile />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orders" element={<Orders />} />
         </Route>
 
         <Route element={<AuthRoute />}>

@@ -5,6 +5,22 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #ffe6f0;
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #fa48a1a1; 
+  border-radius: 10px;
+  border: 2px solid #ffe6f0;
+}
+
+
 button {
   outline: none;
 }

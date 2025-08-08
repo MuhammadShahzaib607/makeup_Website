@@ -52,6 +52,7 @@ toastAlert({
   type: "success",
   message: "Item added to cart!"
 })
+setProductQuantity(0)
   }
 
   useEffect(() => {

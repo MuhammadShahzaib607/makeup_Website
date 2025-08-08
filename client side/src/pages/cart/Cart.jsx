@@ -2,20 +2,24 @@ import React, { useContext, useEffect, useState } from 'react'
 import "./cart.scss"
 import CartProductCard from '../../components/cartProductCard/CartProductCard'
 import { CartContext } from '../../../context/CartContext'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Cart = () => {
     const {items} = useContext(CartContext)
-    const navigate = useNavigate()
-console.log(items, "===>> items in CART")
 
-const orderPlacedHandler = ()=> {
-    localStorage.removeItem("items")
-    navigate("/")
-}
+useEffect(() => {
+  if (!sessionStorage.getItem("reloaded")) {
+    sessionStorage.setItem("reloaded", "true");
+    window.location.reload();
+  }
+}, []);
 
   return (
-    <div className='cartPage'>
+    <>
+   {
+    items.length === 0 ?
+     <h2 className='emptyCartHeading'>No items in your cart yet.</h2> :
+     <div className='cartPage'>
 
  <div className="cartHeader">
         <h2>Your Shopping Cart</h2>
@@ -24,7 +28,7 @@ const orderPlacedHandler = ()=> {
 
 {
     items.map((item, idx)=> {
- return <CartProductCard item={item} key={idx} />
+ return <CartProductCard item={item} idx={idx} key={idx} />
     })
 }
 
@@ -37,9 +41,11 @@ const orderPlacedHandler = ()=> {
         }/-</span></p>
           </div>
 
-          <button className="orderBtn" onClick={orderPlacedHandler}>Place Order</button>
+          <Link to="/checkout"><button className="orderBtn">Place Order</button></Link>
         </div>
     </div>
+   }
+    </>
   )
 }
 

@@ -1,7 +1,23 @@
+.emptyCartHeading {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+  justify-self: center;
+  margin: 50px 0;
+  user-select: none;
+  pointer-events: none;
+}
+
+@media (max-width: 500px) {
+  .emptyCartHeading {
+    font-size: 22px !important;
+  }
+}
+
 .cartPage {
   padding: 40px 20px;
   max-width: 1100px;
-  margin: 0 auto;
+  margin: 30px auto;
 
   .cartHeader {
     margin-bottom: 30px;
@@ -85,7 +101,7 @@
       cursor: pointer;
 
       &:hover {
- background-color: #c72c7a;
+        background-color: #c72c7a;
         transform: translateY(-2px);
       }
 
@@ -101,7 +117,7 @@
 
     .cartHeader {
       h2 {
-        font-size: 24px;
+        font-size: 26px;
       }
 
       p {

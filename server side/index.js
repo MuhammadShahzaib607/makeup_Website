@@ -4,7 +4,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { authRoutes } from './Routes/authRoutes.js';
 import { productsRoutes } from './Routes/productsRoutes.js';
-import { ordersRoutes } from './Routes/ordersRoutes.js';
+import  ordersRoutes  from './Routes/ordersRoutes.js';
 import { connectDB } from './utils/connectDB.js';
 import cookieParser from 'cookie-parser';
 import { categoryRoutes } from './Routes/categoryRoutes.js';

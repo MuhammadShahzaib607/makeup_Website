@@ -8,7 +8,7 @@ export const addToCart = asyncHandler(async (req, res, next) => {
 
     const { productId, quantity = 1 } = req.body;
     const userId = req.user.id; // Authenticated user ki ID
-    console.log(userId, "User ID from token:", userId);
+    // console.log(userId, "User ID from token:", userId);
     if (!productId) {
         return next(createError(400, "Product ID is required."));
     }

@@ -13,6 +13,18 @@ const Navbar = () => {
 
   const token = localStorage.getItem("token")
 
+useEffect(() => {
+  if (toggleOptions || isOpen) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
+  return () => {
+    document.body.style.overflow = "auto"; // cleanup
+  };
+}, [toggleOptions, isOpen]);
+
   const handleOptionClick = (to) => {
     if (pathname !== to) {
       setIsOpen(false)
@@ -63,9 +75,15 @@ const Navbar = () => {
   </Link>
 )}
 
-<Link to='/contact' onClick={() => setIsOpen(false)}>
-  <li className={pathname === '/contact' ? 'navLinkActive' : ''}>contact</li>
-</Link>
+{
+  userData?.isAdmin ? 
+    <Link to="/orders">
+    <li className={pathname === '/orders' ? 'navLinkActive' : ''}>orders</li>
+    </Link> :
+      <Link to="/contact">
+      <li className={pathname === '/contact' ? 'navLinkActive' : ''}>contact</li>
+      </Link>
+}
 
       </div>
       
@@ -132,8 +150,8 @@ const Navbar = () => {
             <li>add product</li>
           </Link>
         ) : (
-          <Link to='/orders' onClick={() => handleOptionClick('/orders')}>
-            <li>orders</li>
+          <Link to='/cart' onClick={() => handleOptionClick('/orders')}>
+            <li>your cart</li>
           </Link>
         )}
 
@@ -182,9 +200,15 @@ const Navbar = () => {
       </Link>
     )}
 
-    <Link to='/contact' onClick={() => setIsOpen(false)}>
+    {
+  userData?.isAdmin ? 
+    <Link to="/orders">
+    <li className={pathname === '/orders' ? 'navLinkActive' : ''}>orders</li>
+    </Link> :
+      <Link to="/contact">
       <li className={pathname === '/contact' ? 'navLinkActive' : ''}>contact</li>
-    </Link>
+      </Link>
+}
   </div>
 
   <div className="toggleNavIcons">
@@ -218,11 +242,11 @@ const Navbar = () => {
             <li>add product</li>
           </Link>
         ) : (
-          <Link to='/orders' onClick={() => {handleOptionClick('/orders')
+          <Link to='/cart' onClick={() => {handleOptionClick('/orders')
                         setIsToggle(false)
             setToggleOptions(false)
           }}>
-            <li>orders</li>
+            <li>your cart</li>
           </Link>
         )}
 
