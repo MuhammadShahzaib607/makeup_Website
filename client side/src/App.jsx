@@ -22,6 +22,7 @@ import Product from './pages/product/Product';
 import Cart from './pages/cart/Cart';
 import Checkout from './pages/checkout/Checkout';
 import Orders from './pages/orders/Orders';
+import Order from './pages/order/Order';
 
 function App() {
   const location = useLocation();
@@ -30,7 +31,8 @@ function App() {
   const privateRouteBases = [
     '/', '/about', '/contact', '/products', '/product',
     '/peoples', '/notifications', '/profile',
-    '/addProduct', '/editProfile', '/cart', '/checkout', "/orders"
+    '/addProduct', '/editProfile', '/cart', '/checkout', "/orders", 
+    '/order'
   ];
 
   // Check if current path starts with any private route path
@@ -72,6 +74,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/order/:id" element={<Order />} />
         </Route>
 
         <Route element={<AuthRoute />}>

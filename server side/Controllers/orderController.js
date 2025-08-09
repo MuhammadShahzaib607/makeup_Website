@@ -1,3 +1,4 @@
+import { tryCatch } from "bullmq";
 import Orders from "../Models/Orders.js";
 
 export const placeOrder =  async (req, res) => {
@@ -63,4 +64,17 @@ export const getAllOrders = async (req, res) => {
       error: error.message
     });
   }
+};
+
+export const deleteOrder = async (req, res)=> {
+try {
+  const id = req.params.id
+const deletesOrder = await Orders.findByIdAndDelete(id)
+res.status(200).json({
+  status: true,
+  message: "order Deleted Successfully"
+})
+} catch (error) {
+  
+}
 };

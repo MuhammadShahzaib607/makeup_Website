@@ -7,8 +7,12 @@ const ProductCard = ({ product }) => {
 <Link to={`/product/${product._id}`}>
     <div className="productCard">
       <img src={product?.images[0].url} alt="" />
-      <h2>{product.name}</h2>
-      <p style={{textAlign: "center"}}>{product.description}</p>
+      {
+        product?.name?.length < 15 ?
+        <h2 style={{textAlign: "center"}}>{product.name}</h2> :
+        <h2 style={{textAlign: "center"}}>{product.name.slice(0, 15)}....</h2> 
+      }
+      <p style={{textAlign: "center"}}>{product.description.slice(0, 50)}....</p>
       <p>Rs.{product?.price}/-</p>
     </div>
     </Link>

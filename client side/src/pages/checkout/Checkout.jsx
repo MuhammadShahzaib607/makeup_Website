@@ -35,7 +35,6 @@ const navigate = useNavigate()
     console.log(city)
     console.log(orderNote)
     console.log(localStorage.getItem("userId"))
-
     if (!order.length) {
       return toastAlert({
         type: "error",
@@ -103,7 +102,7 @@ console.log(error.message)
 
         <div>
           <label htmlFor="phone">Phone Number</label>
-          <input id="phone" type="number" onChange={(e) => { setNumber(e.target.value) }} placeholder='Enter Your Phone Number' defaultValue={number} autoComplete="off" />
+          <input id="phone" type="text" onChange={(e) => { setNumber(e.target.value) }} placeholder='Enter Your Phone Number 03**-******' value={number} autoComplete="off" />
         </div>
 
         <div>

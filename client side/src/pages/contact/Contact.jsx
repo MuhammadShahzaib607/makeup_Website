@@ -47,7 +47,7 @@ const Contact = () => {
 
       toastAlert({
         type: 'success',
-        message: res.data.message || 'Message sent successfully!',
+        message: 'Message sent successfully!',
       });
 
       setFormData({ fullName: '', email: '', subject: '', message: '' });
