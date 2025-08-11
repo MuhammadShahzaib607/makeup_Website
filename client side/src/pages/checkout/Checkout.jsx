@@ -51,7 +51,7 @@ if (!order.length || !fullName.trim() || !email.trim() || !number.trim() || !add
 
     try {
       console.log("api tak req gai")
-      const res = await axios.post("http://localhost:3000/api/v1/orders/", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/orders/`, {
         id: localStorage.getItem("userId"),
         orders: order,
         totalItems,
@@ -74,7 +74,7 @@ setOrderNote("")
 localStorage.removeItem("items")
 
 navigate("/")
-
+window.location.reload()
 toastAlert({
   type: "success",
   message: "Order Placed"

@@ -10,7 +10,7 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/v1/orders/");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/orders/`);
       // console.log(res.data.orders)
       const reverseOrders = res.data.orders.reverse()
       setOrders(reverseOrders);
@@ -38,7 +38,7 @@ const Orders = () => {
   const deleteHandler = async (id) => {
     setLoadingId(id)
     try {
-      const res = axios.delete(`http://localhost:3000/api/v1/orders/${id}`)
+      const res = axios.delete(`${import.meta.env.VITE_API_URL}/api/v1/orders/${id}`)
           setOrders((prev) => prev.filter((order) => order._id !== id));
     } catch (error) {
 setLoadingId(null)

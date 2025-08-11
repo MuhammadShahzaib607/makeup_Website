@@ -33,7 +33,7 @@ const Contact = () => {
       const token = localStorage.getItem('token');
 
       const res = await axios.post(
-        'http://localhost:3000/api/v1/notification',
+        `${import.meta.env.VITE_API_URL}/api/v1/notification`,
         {
           title: subject || `Message from ${fullName}`,
           message: message,

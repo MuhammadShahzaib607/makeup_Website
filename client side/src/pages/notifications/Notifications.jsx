@@ -9,7 +9,7 @@ const [refresher, setRefresher] = useState(false)
 
   const fetchNotifications = async ()=> {
     try {
-      const res = await axios.get("http://localhost:3000/api/v1/notification/")
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/notification/`)
       console.log(res.data.data)
       setNotifications(res.data.data.reverse())
     } catch (error) {

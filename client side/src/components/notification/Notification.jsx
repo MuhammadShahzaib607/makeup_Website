@@ -7,7 +7,7 @@ const Notification = ({notification, date, setRefresher, refresher}) => {
 
 const seenNotification = async ()=> {
   try {
-        const res = await axios.put(`http://localhost:3000/api/v1/notification/${notification?._id}`)
+        const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/v1/notification/${notification?._id}`)
         console.log(res)
         setRefresher(!refresher)
         console.log("chala")
@@ -18,7 +18,7 @@ const seenNotification = async ()=> {
 
 const deleteNotification = async ()=> {
   try {
-        const res = await axios.delete(`http://localhost:3000/api/v1/notification/${notification?._id}`)
+        const res = await axios.delete(`${import.meta.env.VITE_API_URL}/api/v1/notification/${notification?._id}`)
         console.log(res)
         setRefresher(!refresher)
         console.log("chala")

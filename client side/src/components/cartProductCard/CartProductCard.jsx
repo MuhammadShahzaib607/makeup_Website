@@ -12,7 +12,6 @@ const deleteHandler = (id)=> {
 const itemsCopy = [...items]
 const filteredItems = itemsCopy.filter((_, i)=> i !== idx)
 console.log(filteredItems)
-// localStorage.removeItem("items")
 localStorage.setItem("items", JSON.stringify(filteredItems))
 window.location.reload()
 }

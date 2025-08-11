@@ -81,7 +81,7 @@ const EditProfile = () => {
       if (gender) body.gender = gender;
       if (imageUrl) body.profilePicture = imageUrl;
 
-      const res = await axios.put('http://localhost:3000/api/v1/auth/update', body, {
+      const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/v1/auth/update`, body, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`

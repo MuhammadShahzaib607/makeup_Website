@@ -32,8 +32,8 @@ useEffect(() => {
   }
 
   const fetchUser = async ()=> {
-    try {
-      const userData = await axios.get(`http://localhost:3000/api/v1/auth/getUser/${localStorage.getItem("userId")}`)
+    try { 
+      const userData = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/auth/getUser/${localStorage.getItem("userId")}`)
       setUserData(userData.data.data)
     } catch (error) {
       

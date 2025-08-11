@@ -9,7 +9,7 @@ const Profile = () => {
 
  const fetchUser = async ()=> {
     try {
-      const userData = await axios.get(`http://localhost:3000/api/v1/auth/getUser/${localStorage.getItem("userId")}`)
+      const userData = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/auth/getUser/${localStorage.getItem("userId")}`)
       setUserData(userData.data.data)
     //   console.log(userData.data.data)
     } catch (error) {

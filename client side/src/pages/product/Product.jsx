@@ -15,7 +15,7 @@ const Product = () => {
   const fetchProduct = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/v1/products/getProduct/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/v1/products/getProduct/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

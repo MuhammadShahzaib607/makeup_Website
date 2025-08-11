@@ -17,7 +17,7 @@ const AddProduct = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const fetchCategory = async () => {
-    const res = await axios.get("http://localhost:3000/api/v1/category/getallCategories")
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/category/getallCategories`)
     // console.log(res.data.data)
     setCategories(res.data.data)
   }
@@ -51,7 +51,7 @@ images.forEach((img) => form.append('images', img));
 
     try {
       setIsLoading(true)
-      const res = await axios.post('http://localhost:3000/api/v1/products/createProduct', form, {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/products/createProduct`, form, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -12,7 +12,7 @@ const Products = () => {
   const fetchData = async () => {
     try {
       setLoading(true); 
-      const data = await axios.get(`http://localhost:3000/api/v1/products/getProducts/${id}`, {
+      const data = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/products/getProducts/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

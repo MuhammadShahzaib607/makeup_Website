@@ -7,7 +7,7 @@ const Peoples = () => {
   const [users, setUsers] = useState([])
 
   const fetchUsers = async () => {
-    const res = await axios.get("http://localhost:3000/api/v1/auth/getUsers")
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/auth/getUsers`)
     setUsers(res.data.data)
   }
 
