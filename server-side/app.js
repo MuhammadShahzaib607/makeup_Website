@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 import { categoryRoutes } from './Routes/categoryRoutes.js';
 import { cartRoutes } from './Routes/cartRoutes.js';
 import { notificationRoutes } from './Routes/notificationRoutes.js';
+import mongoose from 'mongoose';
 
 dotenv.config();
 let app = express();
