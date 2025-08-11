@@ -43,11 +43,21 @@ app.use((err, req, res, next) => {
 })
 
 
-const connectDB = ()=> {
-    mongoose.connect(process.env.MONGO)
-}
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB connected");
+  } catch (err) {
+    console.error("MongoDB connection failed:", err);
+    process.exit(1);
+  }
+};
 
-connectDB()
+await connectDB();
+
 
 if (process.env.NODE_ENV !== 'production') {
     const port = process.env.PORT || 3000;
