@@ -5,7 +5,6 @@ import helmet from 'helmet';
 import { authRoutes } from './Routes/authRoutes.js';
 import { productsRoutes } from './Routes/productsRoutes.js';
 import  ordersRoutes  from './Routes/ordersRoutes.js';
-import { connectDB } from './utils/connectDB.js';
 import cookieParser from 'cookie-parser';
 import { categoryRoutes } from './Routes/categoryRoutes.js';
 import { cartRoutes } from './Routes/cartRoutes.js';
@@ -41,6 +40,11 @@ app.use((err, req, res, next) => {
         stack: err.stack
     })
 })
+
+
+const connectDB = ()=> {
+    mongoose.connect(process.env.MONGO)
+}
 
 connectDB()
 
