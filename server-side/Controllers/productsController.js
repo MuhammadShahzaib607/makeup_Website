@@ -3,52 +3,67 @@ import fs from 'fs';
 import { deleteFromCloudinary, uploadToCloudinary } from '../utils/cloudinary.js';
 import { createError, createSuccess } from '../utils/responseHandlers.js';
 import Products from '../Models/Products.js';
+import multer from "multer";
+import { v2 as cloudinary } from "cloudinary";
+import streamifier from "streamifier";
+
+const storage = multer.memoryStorage();
+export const upload = multer({ storage });
+
+// Cloudinary stream upload
+const uploadToCloudinary = (fileBuffer, folder) => {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      }
+    );
+    streamifier.createReadStream(fileBuffer).pipe(stream);
+  });
+};
 
 export const createProduct = asyncHandler(async (req, res, next) => {
-    if (!req.files || req.files.length === 0) {
-        return next(createError(400, "Please upload at least one image."));
+  if (!req.files || req.files.length === 0) {
+    return next(createError(400, "Please upload at least one image."));
+  }
+
+  const images = [];
+  for (const file of req.files) {
+    try {
+      const uploadedImage = await uploadToCloudinary(file.buffer, "uploads");
+      images.push({
+        public_id: uploadedImage.public_id,
+        url: uploadedImage.secure_url
+      });
+    } catch (error) {
+      return next(createError(500, "Image upload failed."));
     }
+  }
 
-    const images = [];
+  const { name, description, price, category, stock } = req.body;
+  if (!name || !price || !category) {
+    return next(createError(400, "Name, Price and Category are required."));
+  }
+  const parsedStock = parseInt(stock, 10);
+  if (isNaN(parsedStock) || parsedStock < 0) {
+    return next(createError(400, "Stock must be a non-negative number."));
+  }
 
+  const newProduct = new Products({
+    name,
+    description,
+    price,
+    category,
+    images,
+    user: req.user.id,
+    stock: parsedStock
+  });
 
-    for (const file of req.files) {
-        try {
-            const uploadedImage = await uploadToCloudinary(file.path, "uploads");
-
-            images.push({
-                public_id: uploadedImage.public_id,
-                url: uploadedImage.secure_url
-            });
-
-        } catch (error) {
-            return next(createError(500, "Image upload failed."));
-        }
-    }
-
-    const { name, description, price, category, stock } = req.body;
-    
-    if (!name || !price || !category) {
-        return next(createError(400, "Name, Price and Category are required."));
-    }
-    const parsedStock = parseInt(stock, 10);
-    if (isNaN(parsedStock) || parsedStock < 0) {
-        return next(createError(400, "Stock must be a non-negative number."));
-    }
-
-    const newProduct = new Products({
-        name,
-        description,
-        price,
-        category,
-        images,
-        user: req.user.id,
-        stock: parsedStock
-    });
-
-    const savedProduct = await newProduct.save();
-    let successRes = createSuccess(201, "Product created successfully");
-    res.status(201).json({ successRes, data: savedProduct });
+  const savedProduct = await newProduct.save();
+  let successRes = createSuccess(201, "Product created successfully");
+  res.status(201).json({ successRes, data: savedProduct });
 });
 
 export const updateProduct = asyncHandler(async (req, res, next) => {

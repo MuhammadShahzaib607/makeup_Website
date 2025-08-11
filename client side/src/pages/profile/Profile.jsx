@@ -67,10 +67,10 @@ fetchUser()
 
 
 
-    <div className="totalOrders">
+    {/* <div className="totalOrders">
 <div>Total Orders</div>
 <span>22</span>
-    </div>
+    </div> */}
 
 {/* <div className="cardContainer">
     <ProfileOrdersCard />
